@@ -28,6 +28,13 @@ class Application
 {
     // {{{ properties
     /**
+     * Project name, used mainly to display page title
+     *
+     * @access public
+     * @var string
+     */
+    public $projectName = '';    
+    /**
      * Location of page definitions
      *
      * @access public
@@ -46,7 +53,7 @@ class Application
      * @access public
      * @return void
      */
-    public function __construct($pagesLocation = NULL)
+    public function __construct($projectName ='' , $pagesLocation = NULL)
     {
         if (is_null($pagesLocation)) {
             throw new FatalError('Location for page definitions unspecified.');
@@ -54,10 +61,10 @@ class Application
         if (! file_exists($pagesLocation)) {
             throw new FatalError('Specified location for page definitions does not exist.');
         }
+        $this->projectName = $projectName;
         $this->pagesLocation = $pagesLocation;
     }
     // }}} __construct
-    
     // {{{ main
     /**
      * main
