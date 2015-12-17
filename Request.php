@@ -142,7 +142,7 @@ class Request
     /**
      * constructor
      *
-     * @access private
+     * @access public
      * @return void
      */
     private function __construct()

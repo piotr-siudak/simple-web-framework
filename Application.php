@@ -133,7 +133,7 @@ class Application
     {
         $request = Request::getInstance();
         return join(DIRECTORY_SEPARATOR, array(
-            $this->pagesLocation,
+            $this->pages,
             $request->action,
             $type . '.php'
         ));
