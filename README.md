@@ -1,2 +1,2 @@
 # simple-web-framework
-Rudimentary framework for simple web applications emploing MVC
+Rudimentary framework for easy building of simple web applications
