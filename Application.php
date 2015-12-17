@@ -27,8 +27,37 @@ namespace PiotrSiudak\SimpleWebFramework;
 class Application
 {
     // {{{ properties
+    /**
+     * Location of page definitions
+     *
+     * @access public
+     * @var string
+     */
+    public $pagesLocation = ''; 
     // }}} properties
     // {{{ methods
+    // {{{ __construct
+    /**
+     * constructor
+     * 
+     * @param string $pagesLocation
+     *            Location on disk where page definitions are
+     *            
+     * @access public
+     * @return void
+     */
+    public function __construct($pagesLocation = NULL)
+    {
+        if (is_null($pagesLocation)) {
+            throw new FatalError('Location for page definitions unspecified.');
+        }
+        if (! file_exists($pagesLocation)) {
+            throw new FatalError('Specified location for page definitions does not exist.');
+        }
+        $this->pagesLocation = $pagesLocation;
+    }
+    // }}} __construct
+    
     // {{{ main
     /**
      * main
@@ -80,8 +109,7 @@ class Application
             $request = Request::getInstance();
             $request->referrer = $request->action;
             $request->action = 'error';
-            if (! file_exists($this->getPageFileLocation('action')) ||
-                ! file_exists($this->getPageFileLocation('view'))) {
+            if (! file_exists($this->getPageFileLocation('action')) || ! file_exists($this->getPageFileLocation('view'))) {
                 throw new FatalError('Error occured and another one while trying to hanle it.');
             }
             include $this->getPageFileLocation('action');
@@ -97,7 +125,7 @@ class Application
      * @param string $type
      *            type of file, typicaly: validator, form-prepare, form, action
      *            or view
-     *
+     *            
      * @access private
      * @return string file location
      */
@@ -105,7 +133,7 @@ class Application
     {
         $request = Request::getInstance();
         return join(DIRECTORY_SEPARATOR, array(
-            LOCATION_PAGES,
+            $this->pages,
             $request->action,
             $type . '.php'
         ));
